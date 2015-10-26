@@ -11,7 +11,87 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151026110518) do
+ActiveRecord::Schema.define(version: 20151026115436) do
+
+  create_table "accounts", force: :cascade do |t|
+    t.string   "phone_number"
+    t.string   "auth_token"
+    t.string   "name"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  create_table "mothers", force: :cascade do |t|
+    t.string   "name"
+    t.string   "weeks_since_conception"
+    t.boolean  "expectant",              default: true
+    t.boolean  "opted_in",               default: true
+    t.integer  "account_id"
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
+  end
+
+  add_index "mothers", ["account_id"], name: "index_mothers_on_account_id"
+
+  create_table "options", force: :cascade do |t|
+    t.string   "key"
+    t.text     "text"
+    t.integer  "question_id"
+    t.integer  "account_id"
+    t.integer  "next_step_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  add_index "options", ["account_id"], name: "index_options_on_account_id"
+  add_index "options", ["question_id"], name: "index_options_on_question_id"
+
+  create_table "progresses", force: :cascade do |t|
+    t.integer  "mother_id"
+    t.integer  "step_id"
+    t.integer  "account_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "progresses", ["account_id"], name: "index_progresses_on_account_id"
+  add_index "progresses", ["mother_id"], name: "index_progresses_on_mother_id"
+  add_index "progresses", ["step_id"], name: "index_progresses_on_step_id"
+
+  create_table "questions", force: :cascade do |t|
+    t.text     "text"
+    t.integer  "account_id"
+    t.integer  "step_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "questions", ["account_id"], name: "index_questions_on_account_id"
+  add_index "questions", ["step_id"], name: "index_questions_on_step_id"
+
+  create_table "responses", force: :cascade do |t|
+    t.integer  "step_id"
+    t.text     "text"
+    t.integer  "account_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "responses", ["account_id"], name: "index_responses_on_account_id"
+  add_index "responses", ["step_id"], name: "index_responses_on_step_id"
+
+  create_table "steps", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "account_id"
+    t.integer  "wizard_id"
+    t.integer  "next_step_id"
+    t.string   "step_type"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  add_index "steps", ["account_id"], name: "index_steps_on_account_id"
+  add_index "steps", ["wizard_id"], name: "index_steps_on_wizard_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -31,5 +111,16 @@ ActiveRecord::Schema.define(version: 20151026110518) do
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+
+  create_table "wizards", force: :cascade do |t|
+    t.string   "start_keyword"
+    t.integer  "account_id"
+    t.string   "name"
+    t.string   "reset_keyword"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "wizards", ["account_id"], name: "index_wizards_on_account_id"
 
 end
