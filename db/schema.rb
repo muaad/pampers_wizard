@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151026123831) do
+ActiveRecord::Schema.define(version: 20151026131448) do
 
   create_table "accounts", force: :cascade do |t|
     t.string   "phone_number"
@@ -27,9 +27,10 @@ ActiveRecord::Schema.define(version: 20151026123831) do
     t.boolean  "expectant",              default: true
     t.boolean  "opted_in",               default: true
     t.integer  "account_id"
-    t.datetime "created_at",                            null: false
-    t.datetime "updated_at",                            null: false
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
     t.string   "phone_number"
+    t.boolean  "bot_complete",           default: false
   end
 
   add_index "mothers", ["account_id"], name: "index_mothers_on_account_id"
