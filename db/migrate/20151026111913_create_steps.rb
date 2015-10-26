@@ -5,6 +5,7 @@ class CreateSteps < ActiveRecord::Migration
       t.references :account, index: true, foreign_key: true
       t.references :wizard, index: true, foreign_key: true
       t.integer :next_step_id
+      t.string :step_type
 
       t.timestamps null: false
     end
