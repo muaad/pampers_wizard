@@ -1,6 +1,3 @@
-User.create!([
-  {email: "user@example.com", encrypted_password: "$2a$10$b21DhaaNWJZuMyKZGaCOj.LuxV8Q6Bc.pGBL4RHdWArLoeccS6hIm", reset_password_token: nil, reset_password_sent_at: nil, remember_created_at: nil, sign_in_count: 0, current_sign_in_at: nil, last_sign_in_at: nil, current_sign_in_ip: nil, last_sign_in_ip: nil, name: nil}
-])
 Account.create!([
   {phone_number: "254771437706", auth_token: "044a0fe3ae478104c344e5be8d4e3ea5", name: "Pampers"}
 ])
@@ -9,9 +6,6 @@ Command.create!([
   {name: "menu", action_path: "/menu", step_id: 6},
   {name: "diet", action_path: "/diet", step_id: 10},
   {name: "shower", action_path: "/shower", step_id: nil}
-])
-Mother.create!([
-  {name: "Mama", weeks_since_conception: "4", expectant: true, opted_in: true, account_id: 1, phone_number: "254722778438", bot_complete: false}
 ])
 Option.create!([
   {key: "1", text: "Register Your Baby", question_id: 1, account_id: 1, next_step_id: 2},
@@ -53,40 +47,6 @@ Option.create!([
   {key: "3", text: "Home", question_id: 12, account_id: 1, next_step_id: 5},
   {key: "1", text: "Back to Early Pregnancy tips", question_id: 13, account_id: 1, next_step_id: 7},
   {key: "2", text: "Home", question_id: 13, account_id: 1, next_step_id: 5}
-])
-Progress.create!([
-  {mother_id: 8, step_id: 1, account_id: nil},
-  {mother_id: 8, step_id: 2, account_id: 1},
-  {mother_id: 8, step_id: 3, account_id: 1},
-  {mother_id: 8, step_id: 4, account_id: 1},
-  {mother_id: 8, step_id: 5, account_id: 1},
-  {mother_id: 8, step_id: 6, account_id: 1},
-  {mother_id: 8, step_id: 5, account_id: 1},
-  {mother_id: 8, step_id: 6, account_id: 1},
-  {mother_id: 8, step_id: 7, account_id: 1},
-  {mother_id: 8, step_id: 8, account_id: 1},
-  {mother_id: 8, step_id: 7, account_id: 1},
-  {mother_id: 8, step_id: 8, account_id: 1},
-  {mother_id: 8, step_id: 9, account_id: 1},
-  {mother_id: 8, step_id: 10, account_id: 1},
-  {mother_id: 8, step_id: 11, account_id: 1},
-  {mother_id: 8, step_id: 12, account_id: 1},
-  {mother_id: 8, step_id: 7, account_id: 1},
-  {mother_id: 8, step_id: 8, account_id: 1},
-  {mother_id: 8, step_id: 9, account_id: 1},
-  {mother_id: 8, step_id: 5, account_id: 1},
-  {mother_id: 8, step_id: 6, account_id: 1},
-  {mother_id: 8, step_id: 11, account_id: 1},
-  {mother_id: 8, step_id: 12, account_id: 1},
-  {mother_id: 8, step_id: 13, account_id: 1},
-  {mother_id: 8, step_id: 7, account_id: 1},
-  {mother_id: 8, step_id: 5, account_id: 1},
-  {mother_id: 8, step_id: 6, account_id: 1},
-  {mother_id: 8, step_id: 9, account_id: 1},
-  {mother_id: 8, step_id: 6, account_id: nil},
-  {mother_id: 8, step_id: 6, account_id: nil},
-  {mother_id: 8, step_id: 7, account_id: 1},
-  {mother_id: 8, step_id: 10, account_id: nil}
 ])
 Question.create!([
   {text: "Welcome to the Pampers Village, Please register your baby and yourself to get helpful tips and offers from Pampers", account_id: 1, step_id: 1},
