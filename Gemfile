@@ -19,6 +19,7 @@ gem 'devise'
 gem 'haml-rails'
 gem 'rails_admin'
 gem 'httparty'
+gem 'seed_dump'
 group :development do
   gem 'better_errors'
   gem 'html2haml'
