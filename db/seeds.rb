@@ -2,18 +2,18 @@ account = Account.create!(phone_number: "254771437706", auth_token: "044a0fe3ae4
 
 wizard = Wizard.create!(start_keyword: "Pampers", account_id: account.id, name: "Pampers", reset_keyword: "reset")
 
-register = Step.create!(name: "Register", account_id: account.id, wizard_id: wizard.id, next_step_id: 2, step_type: "menu")
-expectant = Step.create!(name: "Expectant", account_id: account.id, wizard_id: wizard.id, next_step_id: 3, step_type: "menu")
-weeks = Step.create!(name: "Weeks", account_id: account.id, wizard_id: wizard.id, next_step_id: 4, step_type: "profile")
-name = Step.create!(name: "Name", account_id: account.id, wizard_id: wizard.id, next_step_id: 5, step_type: "profile")
-advice = Step.create!(name: "Advice", account_id: account.id, wizard_id: wizard.id, next_step_id: 6, step_type: "menu")
-tips = Step.create!(name: "Tips", account_id: account.id, wizard_id: wizard.id, next_step_id: 7, step_type: "menu")
-pregnancy_tips = Step.create!(name: "Pregnancy Tips", account_id: account.id, wizard_id: wizard.id, next_step_id: 8, step_type: "menu")
-relieve_stress = Step.create!(name: "Relieve Stress", account_id: account.id, wizard_id: wizard.id, next_step_id: 9, step_type: "menu")
-staying_healthy = Step.create!(name: "Staying Healthy", account_id: account.id, wizard_id: wizard.id, next_step_id: 10, step_type: "menu")
-staying_healthy2 = Step.create!(name: "Staying Healthy 2", account_id: account.id, wizard_id: wizard.id, next_step_id: 11, step_type: "menu")
-how_many_weeks = Step.create!(name: "How many weeks", account_id: account.id, wizard_id: wizard.id, next_step_id: 12, step_type: "free-text")
-week4 = Step.create!(name: "Week 4", account_id: account.id, wizard_id: wizard.id, next_step_id: 13, step_type: "menu")
+register = Step.create!(name: "Register", account_id: account.id, wizard_id: wizard.id, next_step_id: expectant.id, step_type: "menu")
+expectant = Step.create!(name: "Expectant", account_id: account.id, wizard_id: wizard.id, next_step_id: weeks.id, step_type: "menu")
+weeks = Step.create!(name: "Weeks", account_id: account.id, wizard_id: wizard.id, next_step_id: name.id, step_type: "profile")
+name = Step.create!(name: "Name", account_id: account.id, wizard_id: wizard.id, next_step_id: advice.id, step_type: "profile")
+advice = Step.create!(name: "Advice", account_id: account.id, wizard_id: wizard.id, next_step_id: tips.id, step_type: "menu")
+tips = Step.create!(name: "Tips", account_id: account.id, wizard_id: wizard.id, next_step_id: pregnancy_tips.id, step_type: "menu")
+pregnancy_tips = Step.create!(name: "Pregnancy Tips", account_id: account.id, wizard_id: wizard.id, next_step_id: relieve_stress.id, step_type: "menu")
+relieve_stress = Step.create!(name: "Relieve Stress", account_id: account.id, wizard_id: wizard.id, next_step_id: staying_healthy.id, step_type: "menu")
+staying_healthy = Step.create!(name: "Staying Healthy", account_id: account.id, wizard_id: wizard.id, next_step_id: staying_healthy2, step_type: "menu")
+staying_healthy2 = Step.create!(name: "Staying Healthy 2", account_id: account.id, wizard_id: wizard.id, next_step_id: how_many_weeks.id, step_type: "menu")
+how_many_weeks = Step.create!(name: "How many weeks", account_id: account.id, wizard_id: wizard.id, next_step_id: week4.id, step_type: "free-text")
+week4 = Step.create!(name: "Week 4", account_id: account.id, wizard_id: wizard.id, next_step_id: more.id, step_type: "menu")
 more = Step.create!(name: "More on week 4", account_id: account.id, wizard_id: wizard.id, step_type: "menu")
 
 Command.create!([
@@ -38,7 +38,7 @@ question12 = Question.create! text: "Your Baby at week 4\v:\r\n\r\nThe great div
 question13 = Question.create! text: "The umbilical cord comes out of one side of the placenta. The amniotic fluid, which will cushion your little one throughout the pregnancy, is already forming inside an encircling sac. \v\vMeasuring up. By the end of the week, the embryo measures around 0.04 inch — about the size of a poppy seed.", account_id: account.id, step: more
 
 Option.create!([
-  {key: "1", text: "Register Your Baby", question_id: question1, account_id: account.id, next_step_id: 2},
+  {key: "1", text: "Register Your Baby", question_id: question1, account_id: account.id, next_step_id: expectant.id},
   {key: "2", text: "About Pampers", question_id: question1, account_id: account.id},
   {key: "1", text: " I am expectant", question_id: question2, account_id: account.id},
   {key: "2", text: " My baby has been born", question_id: question2, account_id: account.id},
@@ -49,32 +49,32 @@ Option.create!([
   {key: "5", text: "Pampers Offers", question_id: question5, account_id: account.id},
   {key: "6", text: "About Pampers", question_id: question5, account_id: account.id},
   {key: "1", text: "Early pregnancy tips", question_id: question6, account_id: account.id},
-  {key: "2", text: "Staying Healthy", question_id: question6, account_id: account.id, next_step_id: 9},
+  {key: "2", text: "Staying Healthy", question_id: question6, account_id: account.id, next_step_id: staying_healthy.id},
   {key: "3", text: "Help with Giving Birth", question_id: question6, account_id: account.id},
-  {key: "4", text: "Pregnancy Calendar", question_id: question6, account_id: account.id, next_step_id: 11},
+  {key: "4", text: "Pregnancy Calendar", question_id: question6, account_id: account.id, next_step_id: how_many_weeks.id},
   {key: "5", text: "Baby Shower tips", question_id: question6, account_id: account.id},
-  {key: "6", text: "Home", question_id: question6, account_id: account.id, next_step_id: 5},
+  {key: "6", text: "Home", question_id: question6, account_id: account.id, next_step_id: advice.id},
   {key: "1", text: "How to relieve stress", question_id: question7, account_id: account.id},
   {key: "2", text: "How to make the announcement", question_id: question7, account_id: account.id},
   {key: "3", text: "How to choose a good doctor", question_id: question7, account_id: account.id},
   {key: "4", text: "Surviving morning sickness", question_id: question7, account_id: account.id},
   {key: "5", text: "More tips", question_id: question7, account_id: account.id},
-  {key: "6", text: "Home", question_id: question7, account_id: account.id, next_step_id: 5},
+  {key: "6", text: "Home", question_id: question7, account_id: account.id, next_step_id: advice.id},
   {key: "1", text: "Continue reading", question_id: question8, account_id: account.id},
-  {key: "2", text: "Back to Early Pregnancy tips", question_id: question8, account_id: account.id, next_step_id: 7},
-  {key: "3", text: "Home", question_id: question8, account_id: account.id, next_step_id: 5},
-  {key: "1", text: "Pregnancy Diet", question_id: question9, account_id: account.id, next_step_id: 10},
+  {key: "2", text: "Back to Early Pregnancy tips", question_id: question8, account_id: account.id, next_step_id: pregnancy_tips.id},
+  {key: "3", text: "Home", question_id: question8, account_id: account.id, next_step_id: advice.id},
+  {key: "1", text: "Pregnancy Diet", question_id: question9, account_id: account.id, next_step_id: staying_healthy2},
   {key: "2", text: "Exercise during pregnancy", question_id: question9, account_id: account.id},
   {key: "3", text: "Managing your moods", question_id: question9, account_id: account.id},
   {key: "4", text: "Surviving morning sickness", question_id: question9, account_id: account.id},
   {key: "5", text: "More tips", question_id: question9, account_id: account.id},
-  {key: "6", text: "Home", question_id: question9, next_step_id: 5},
+  {key: "6", text: "Home", question_id: question9, next_step_id: advice.id},
   {key: "1", text: "Continue reading", question_id: question10, account_id: account.id},
-  {key: "2", text: "Back to Early Pregnancy tips", question_id: question10, account_id: account.id, next_step_id: 7},
-  {key: "3", text: "Home", question_id: question10, account_id: account.id, next_step_id: 5},
+  {key: "2", text: "Back to Early Pregnancy tips", question_id: question10, account_id: account.id, next_step_id: pregnancy_tips.id},
+  {key: "3", text: "Home", question_id: question10, account_id: account.id, next_step_id: advice.id},
   {key: "1", text: "Continue reading", question_id: question12, account_id: account.id},
-  {key: "2", text: "Back to Early Pregnancy tips", question_id: question12, account_id: account.id, next_step_id: 7},
-  {key: "3", text: "Home", question_id: question12, account_id: account.id, next_step_id: 5},
-  {key: "1", text: "Back to Early Pregnancy tips", question_id: question13, account_id: account.id, next_step_id: 7},
-  {key: "2", text: "Home", question_id: question13, account_id: account.id, next_step_id: 5}
+  {key: "2", text: "Back to Early Pregnancy tips", question_id: question12, account_id: account.id, next_step_id: pregnancy_tips.id},
+  {key: "3", text: "Home", question_id: question12, account_id: account.id, next_step_id: advice.id},
+  {key: "1", text: "Back to Early Pregnancy tips", question_id: question13, account_id: account.id, next_step_id: pregnancy_tips.id},
+  {key: "2", text: "Home", question_id: question13, account_id: account.id, next_step_id: advice.id}
 ])
