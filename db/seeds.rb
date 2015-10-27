@@ -33,7 +33,7 @@ question7 = Question.create! text: "Learn how to spot early symptoms, choose the
 question8 = Question.create! text: "Pregnancy can be stressful as your body undergoes many changes. Here are a few tips to help you relax\t\r\n - Talk to your boss about reducing your work hours\r\n - Ask a friend or family member to help with some daily chores\r\n - Postpone any large travel plans or events.\r\n - Talk to someone about how you are feeling", account_id: account.id, step_id: relieve_stress.id
 question9 = Question.create! text: "Your health and well-being are the foundation for your baby's growth and development. Pick up tips on nutrition, exercise, and safety during pregnancy", account_id: account.id, step_id: staying_healthy.id
 question10 = Question.create! text: "Now you’re pregnant, eating for two doesn’t actually mean doubling your food intake.  In fact, most pregnant women only need about 300 additional calories per day\r\n\r\nWith this in mind, maintain a balanced diet for a healthy pregnancy across the 5 main food groups:\r\nFruits\r\nVegetables\r\nGrains\r\nprotein foods\r\nDairy", account_id: account.id, step: staying_healthy2
-question11 = Question.create! text: "Week by week, your baby grows and develops in wonderful ways. Use our tool to keep track and stay informed throughout your pregnancy.\r\n\u0000\r\nGet started by entering how many weeks you have been pregnant.", account_id: account.id, step: how_many_weeks
+question11 = Question.create! text: "Week by week, your baby grows and develops in wonderful ways. Use our tool to keep track and stay informed throughout your pregnancy.\r\n\r\nGet started by entering how many weeks you have been pregnant.", account_id: account.id, step: how_many_weeks
 question12 = Question.create! text: "Your Baby at week 4\v:\r\n\r\nThe great divide. Once implanted in the side of your uterus, the fertilized egg divides into layers of cells and officially becomes an embryo. These cell layers will grow into specialized parts of your little one's body, such as the nervous system, skeleton, muscles, and organs. \v\vSupport system under way. The placenta, the disk-like organ that connects your circulation to the embryo's, begins to form and attaches to the uterine wall where the egg is implanted. ", account_id: account.id, step: week4
 question13 = Question.create! text: "The umbilical cord comes out of one side of the placenta. The amniotic fluid, which will cushion your little one throughout the pregnancy, is already forming inside an encircling sac. \v\vMeasuring up. By the end of the week, the embryo measures around 0.04 inch — about the size of a poppy seed.", account_id: account.id, step: more
 
@@ -62,7 +62,7 @@ Option.create!([
   {key: "6", text: "Home", question_id: question7, account_id: account.id, next_step_id: 5},
   {key: "1", text: "Continue reading", question_id: question8, account_id: account.id},
   {key: "2", text: "Back to Early Pregnancy tips", question_id: question8, account_id: account.id, next_step_id: 7},
-  {key: "3", text: "Home\u0000", question_id: question8, account_id: account.id, next_step_id: 5},
+  {key: "3", text: "Home", question_id: question8, account_id: account.id, next_step_id: 5},
   {key: "1", text: "Pregnancy Diet", question_id: question9, account_id: account.id, next_step_id: 10},
   {key: "2", text: "Exercise during pregnancy", question_id: question9, account_id: account.id},
   {key: "3", text: "Managing your moods", question_id: question9, account_id: account.id},
@@ -71,7 +71,7 @@ Option.create!([
   {key: "6", text: "Home", question_id: question9, next_step_id: 5},
   {key: "1", text: "Continue reading", question_id: question10, account_id: account.id},
   {key: "2", text: "Back to Early Pregnancy tips", question_id: question10, account_id: account.id, next_step_id: 7},
-  {key: "3", text: "Home\u0000", question_id: question10, account_id: account.id, next_step_id: 5},
+  {key: "3", text: "Home", question_id: question10, account_id: account.id, next_step_id: 5},
   {key: "1", text: "Continue reading", question_id: question12, account_id: account.id},
   {key: "2", text: "Back to Early Pregnancy tips", question_id: question12, account_id: account.id, next_step_id: 7},
   {key: "3", text: "Home", question_id: question12, account_id: account.id, next_step_id: 5},
