@@ -22,6 +22,21 @@ Command.create!([
   {name: "diet", action_path: "/diet", step: staying_healthy2},
   {name: "shower", action_path: "/shower", step_id: nil}
 ])
+
+question1 = Question.create! text: "Welcome to the Pampers Village, Please register your baby and yourself to get helpful tips and offers from Pampers", account_id: account.id, step: register
+question2 = Question.create! text: "Are you expectant or is your baby born?", account_id: account.id, step_id: expectant.id
+question3 = Question.create! text: "How long have you been pregnant in weeks. Don’t worry you don’t have to be precise?", account_id: account.id, step_id: weeks.id
+question4 = Question.create! text: "Great, now please enter your name to finish the registration.", account_id: account.id, step_id: name.id
+question5 = Question.create! text: "Thanks for registering {{mother_name}}. Please choose an option below:", account_id: account.id, step_id: advice.id
+question6 = Question.create! text: "Expecting a baby? We'll guide you through every step of this beautiful journey, from finding out you're pregnant to holding your little one for the first time", account_id: account.id, step_id: tips.id
+question7 = Question.create! text: "Learn how to spot early symptoms, choose the right doctor, and stay relaxed during these first few weeks.", account_id: account.id, step_id: pregnancy_tips.id
+question8 = Question.create! text: "Pregnancy can be stressful as your body undergoes many changes. Here are a few tips to help you relax\t\r\n - Talk to your boss about reducing your work hours\r\n - Ask a friend or family member to help with some daily chores\r\n - Postpone any large travel plans or events.\r\n - Talk to someone about how you are feeling", account_id: account.id, step_id: relieve_stress.id
+question9 = Question.create! text: "Your health and well-being are the foundation for your baby's growth and development. Pick up tips on nutrition, exercise, and safety during pregnancy", account_id: account.id, step_id: staying_healthy.id
+question10 = Question.create! text: "Now you’re pregnant, eating for two doesn’t actually mean doubling your food intake.  In fact, most pregnant women only need about 300 additional calories per day\r\n\r\nWith this in mind, maintain a balanced diet for a healthy pregnancy across the 5 main food groups:\r\nFruits\r\nVegetables\r\nGrains\r\nprotein foods\r\nDairy", account_id: account.id, step: staying_healthy2
+question11 = Question.create! text: "Week by week, your baby grows and develops in wonderful ways. Use our tool to keep track and stay informed throughout your pregnancy.\r\n\u0000\r\nGet started by entering how many weeks you have been pregnant.", account_id: account.id, step: how_many_weeks
+question12 = Question.create! text: "Your Baby at week 4\v:\r\n\r\nThe great divide. Once implanted in the side of your uterus, the fertilized egg divides into layers of cells and officially becomes an embryo. These cell layers will grow into specialized parts of your little one's body, such as the nervous system, skeleton, muscles, and organs. \v\vSupport system under way. The placenta, the disk-like organ that connects your circulation to the embryo's, begins to form and attaches to the uterine wall where the egg is implanted. ", account_id: account.id, step: week4
+question13 = Question.create! text: "The umbilical cord comes out of one side of the placenta. The amniotic fluid, which will cushion your little one throughout the pregnancy, is already forming inside an encircling sac. \v\vMeasuring up. By the end of the week, the embryo measures around 0.04 inch — about the size of a poppy seed.", account_id: account.id, step: more
+
 Option.create!([
   {key: "1", text: "Register Your Baby", question_id: question1, account_id: account.id, next_step_id: 2},
   {key: "2", text: "About Pampers", question_id: question1, account_id: account.id, next_step_id: nil},
@@ -63,16 +78,3 @@ Option.create!([
   {key: "1", text: "Back to Early Pregnancy tips", question_id: question13, account_id: account.id, next_step_id: 7},
   {key: "2", text: "Home", question_id: question13, account_id: account.id, next_step_id: 5}
 ])
- question1 = Question.create! text: "Welcome to the Pampers Village, Please register your baby and yourself to get helpful tips and offers from Pampers", account_id: account.id, step: register
- question2 = Question.create! text: "Are you expectant or is your baby born?", account_id: account.id, step_id: expectant.id
- question3 = Question.create! text: "How long have you been pregnant in weeks. Don’t worry you don’t have to be precise?", account_id: account.id, step_id: weeks.id
- question4 = Question.create! text: "Great, now please enter your name to finish the registration.", account_id: account.id, step_id: name.id
- question5 = Question.create! text: "Thanks for registering {{mother_name}}. Please choose an option below:", account_id: account.id, step_id: advice.id
- question6 = Question.create! text: "Expecting a baby? We'll guide you through every step of this beautiful journey, from finding out you're pregnant to holding your little one for the first time", account_id: account.id, step_id: tips.id
- question7 = Question.create! text: "Learn how to spot early symptoms, choose the right doctor, and stay relaxed during these first few weeks.", account_id: account.id, step_id: pregnancy_tips.id
- question8 = Question.create! text: "Pregnancy can be stressful as your body undergoes many changes. Here are a few tips to help you relax\t\r\n - Talk to your boss about reducing your work hours\r\n - Ask a friend or family member to help with some daily chores\r\n - Postpone any large travel plans or events.\r\n - Talk to someone about how you are feeling", account_id: account.id, step_id: relieve_stress.id
- question9 = Question.create! text: "Your health and well-being are the foundation for your baby's growth and development. Pick up tips on nutrition, exercise, and safety during pregnancy", account_id: account.id, step_id: staying_healthy.id
- question10 = Question.create! text: "Now you’re pregnant, eating for two doesn’t actually mean doubling your food intake.  In fact, most pregnant women only need about 300 additional calories per day\r\n\r\nWith this in mind, maintain a balanced diet for a healthy pregnancy across the 5 main food groups:\r\nFruits\r\nVegetables\r\nGrains\r\nprotein foods\r\nDairy", account_id: account.id, step: staying_healthy2
- question11 = Question.create! text: "Week by week, your baby grows and develops in wonderful ways. Use our tool to keep track and stay informed throughout your pregnancy.\r\n\u0000\r\nGet started by entering how many weeks you have been pregnant.", account_id: account.id, step: how_many_weeks
- question12 = Question.create! text: "Your Baby at week 4\v:\r\n\r\nThe great divide. Once implanted in the side of your uterus, the fertilized egg divides into layers of cells and officially becomes an embryo. These cell layers will grow into specialized parts of your little one's body, such as the nervous system, skeleton, muscles, and organs. \v\vSupport system under way. The placenta, the disk-like organ that connects your circulation to the embryo's, begins to form and attaches to the uterine wall where the egg is implanted. ", account_id: account.id, step: week4
- question13 = Question.create! text: "The umbilical cord comes out of one side of the placenta. The amniotic fluid, which will cushion your little one throughout the pregnancy, is already forming inside an encircling sac. \v\vMeasuring up. By the end of the week, the embryo measures around 0.04 inch — about the size of a poppy seed.", account_id: account.id, step: more
