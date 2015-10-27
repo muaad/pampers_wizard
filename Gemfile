@@ -18,6 +18,7 @@ gem 'bootstrap-sass'
 gem 'devise'
 gem 'haml-rails'
 gem 'rails_admin'
+gem 'httparty'
 group :development do
   gem 'better_errors'
   gem 'html2haml'
@@ -38,4 +39,8 @@ group :test do
   gem 'database_cleaner'
   gem 'launchy'
   gem 'selenium-webdriver'
+end
+
+group :production do
+	gem 'pg'
 end
