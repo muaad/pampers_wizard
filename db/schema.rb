@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151028125126) do
+ActiveRecord::Schema.define(version: 20151028173540) do
 
   create_table "accounts", force: :cascade do |t|
     t.string   "phone_number"
@@ -106,6 +106,17 @@ ActiveRecord::Schema.define(version: 20151028125126) do
   add_index "questions", ["account_id"], name: "index_questions_on_account_id"
   add_index "questions", ["step_id"], name: "index_questions_on_step_id"
 
+  create_table "reminders", force: :cascade do |t|
+    t.integer  "tip_id"
+    t.integer  "mother_id"
+    t.boolean  "sent",       default: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+  end
+
+  add_index "reminders", ["mother_id"], name: "index_reminders_on_mother_id"
+  add_index "reminders", ["tip_id"], name: "index_reminders_on_tip_id"
+
   create_table "responses", force: :cascade do |t|
     t.integer  "step_id"
     t.text     "text"
@@ -129,6 +140,14 @@ ActiveRecord::Schema.define(version: 20151028125126) do
 
   add_index "steps", ["account_id"], name: "index_steps_on_account_id"
   add_index "steps", ["wizard_id"], name: "index_steps_on_wizard_id"
+
+  create_table "tips", force: :cascade do |t|
+    t.string   "name"
+    t.text     "body"
+    t.string   "week"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
