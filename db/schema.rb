@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151028123318) do
+ActiveRecord::Schema.define(version: 20151028125126) do
 
   create_table "accounts", force: :cascade do |t|
     t.string   "phone_number"
@@ -41,6 +41,19 @@ ActiveRecord::Schema.define(version: 20151028123318) do
   end
 
   add_index "commands", ["step_id"], name: "index_commands_on_step_id"
+
+  create_table "messages", force: :cascade do |t|
+    t.integer  "chat_id"
+    t.text     "body"
+    t.integer  "from_id"
+    t.integer  "to_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "messages", ["chat_id"], name: "index_messages_on_chat_id"
+  add_index "messages", ["from_id"], name: "index_messages_on_from_id"
+  add_index "messages", ["to_id"], name: "index_messages_on_to_id"
 
   create_table "mothers", force: :cascade do |t|
     t.string   "name"
