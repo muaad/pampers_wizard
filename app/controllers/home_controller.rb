@@ -12,6 +12,8 @@ class HomeController < ApplicationController
 	    			msg += "/menu - Get a list of tips and choose one of them\n\n"
 	    			msg += "/diet - This will let you get some dietary tips\n\n"
 	    			msg += "/shower - This will give you some instructions on the baby shower\n\n"
+	    			msg += "/chat - You can chat with fellow mums anonymously and exchange ideas with them.\n\n"
+
 	    			Whatsapp.send_message(msg, params[:phone_number], @account)
 	    		elsif cmd.name == "shower"
 	    				images = [
@@ -20,6 +22,19 @@ class HomeController < ApplicationController
 	    				]
 	    				Whatsapp.send_image(@account, params[:phone_number], images[0])
 	    				Whatsapp.send_image(@account, params[:phone_number], images[1])
+	    		elsif cmd.name == "chat"
+	    			if @mother.username.nil?
+	    				step = Step.find_by(name: "Username")
+	    				progress = Progress.create! mother: @mother, step: step
+	    				question = step.questions.first
+	    				msg = question.to_result(@mother)[:text]
+	    			else
+	    				msg = "Find a random person to chat with by sending /spin. You can then start a conversation with your random friend like this:\n\n@username: hi. \n\nOnce you have started the chat, you don't have to include the username again. Just send the message the way you normally do. But, if you want to chat with someone else, you will have to start with the username or your message will go to the wrong person. If you want to be very careful, you can always add the username to your message but most of the times, that is not neccessary."
+	    			end
+	    			Whatsapp.send_message(msg, params[:phone_number], @account)
+	    		elsif cmd.name == "spin"
+	    				msg = Command.spin(@mother)
+	    				Whatsapp.send_message(msg, params[:phone_number], @account)
 	    		else
 	    			if !cmd.step.nil?
 	    				progress = Progress.create! mother: @mother, step: cmd.step
@@ -32,6 +47,10 @@ class HomeController < ApplicationController
 	    		Whatsapp.send_message("We don't recognize this command: #{params[:text]}. Please send /help.", @mother.phone_number, @account)
 	    	end
     		render json: { success: true }
+    	elsif @mother.in_chat? || params[:text].start_with?("@")
+    		message = Chat.message_details(params[:text])[:message]
+    		username = Chat.message_details(params[:text])[:username]
+    		Chat.process @mother, message, account, username
       else
       	# Check progress first in case an answer of one of the steps is a start of another wizard?
 	      @current = Progress.where(mother_id: @mother.id).order(id: :desc).first
@@ -102,6 +121,15 @@ class HomeController < ApplicationController
 	  		else
 	  			return {type: "Response", text: "You have sent #{text} which is not a number. Please send a number i.e 4. Thanks."}
 	  		end
+	  	elsif step.name.downcase == "username"
+  			error = Mother.check_format(params[:text])
+  			if error.blank?
+  				@mother.update(username: params[:username])
+  				msg = "Your username has been setup. Now, you can chat with fellow mums.\n\nFind a random person to chat with by sending /spin. You can then start a conversation with your random friend like this:\n\n@username: hi. \n\nOnce you have started the chat, you don't have to include the username again. Just send the message the way you normally do. But, if you want to chat with someone else, you will have to start with the username or your message will go to the wrong person. If you want to be very careful, you can always add the username to your message but most of the times, that is not neccessary."
+  			else
+  				msg = error
+  			end
+  			return {type: "Response", text: msg}
 	  	end
 	  	next_step = Step.find(step.next_step_id)
 	  	if !next_step.nil?
@@ -111,7 +139,7 @@ class HomeController < ApplicationController
 	  	  return {type: "Response", text: q}
 	  	else
 	  	  @contact.update(bot_complete: true)
-	  	  return {type: "Response", text: "Thanks #{@mother.name} for engaging with us."}
+	  	  return {type: "Response", text: "Thanks #{@mother.name} for engaging with us. We will be sending you more helpful information periodically. Send /help to find out what else you can do through this number."}
 	  	end
 	  elsif step.step_type.downcase == "menu"
 	  	question = step.questions.first
