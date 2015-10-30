@@ -138,10 +138,10 @@ class HomeController < ApplicationController
 	  	elsif step.name.downcase == "weeks"
 	  		if is_number?(text)
 	  			mother.update(weeks_since_conception: text)
-	  			tips = Tip.where('week >= ?', mother.weeks_since_conception)
-	  			tips.each do |tip|
-	  				ReminderWorker.perform_in(((tip.week.to_i - mother.weeks_since_conception.to_i) * 60), mother.id, tip.id)
-	  			end
+	  			# tips = Tip.where('week >= ?', mother.weeks_since_conception)
+	  			# tips.each do |tip|
+	  			# 	ReminderWorker.perform_in(((tip.week.to_i - mother.weeks_since_conception.to_i) * 60), mother.id, tip.id)
+	  			# end
 	  		else
 	  			return {type: "Response", text: "You have sent #{text} which is not a number. Please send a number i.e 4. Thanks."}
 	  		end
