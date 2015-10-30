@@ -19,6 +19,9 @@ gem 'haml-rails'
 gem 'rails_admin'
 gem 'httparty'
 gem 'seed_dump'
+gem 'sidekiq'
+gem 'sinatra', require: false
+gem 'slim'
 group :development do
   gem 'better_errors'
   gem 'html2haml'
