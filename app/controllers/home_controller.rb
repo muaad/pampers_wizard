@@ -24,7 +24,7 @@ class HomeController < ApplicationController
 	    				Whatsapp.send_image(@account, params[:phone_number], images[0])
 	    				Whatsapp.send_image(@account, params[:phone_number], images[1])
 	    		elsif cmd.name == "chat"
-	    			if @mother.username.nil?
+	    			if @mother.username.blank?
 	    				step = Step.find_by(name: "Username")
 	    				progress = Progress.create! mother: @mother, step: step
 	    				question = step.questions.first

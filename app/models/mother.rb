@@ -58,6 +58,6 @@ class Mother < ActiveRecord::Base
 	end
 
 	def self.username_exists? username
-		!Mother.where("username like '#{username}'").empty?
+		!Mother.where("username ilike '#{username}'").empty?
 	end
 end
