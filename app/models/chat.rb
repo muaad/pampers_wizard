@@ -15,7 +15,8 @@ class Chat < ActiveRecord::Base
   	receiver
   end
 
-  def self.process sender, username="", message, account
+  def self.process sender, username="", message
+  	account = sender.account
   	sender.progresses.delete_all if !sender.progresses.blank?
   	if !username.empty?
   		recipient = Mother.where('username like ?', username).first
@@ -26,6 +27,7 @@ class Chat < ActiveRecord::Base
   					sender.chats.update_all(active: false)
   					recipient.chats.update_all(active: false)
   					chat = Chat.find_or_create_by(mother_id: sender.id, friend_id: recipient.id)
+            chat.update(active: true)
   					Message.create! chat: chat, body: message, from_id: sender.id, to_id: recipient.id
   				else
   					sender.chats.update_all(active: false)

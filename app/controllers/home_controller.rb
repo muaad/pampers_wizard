@@ -4,6 +4,7 @@ class HomeController < ApplicationController
 	before_action :set_account, only: [:wizard]
 	def wizard
     if params[:notification_type] == "MessageReceived"
+    	@account = Account.find_by(phone_number: params[:account])
     	if is_command(params[:text])
     		cmd = command(params[:text])
     		if !cmd.nil?
@@ -48,9 +49,28 @@ class HomeController < ApplicationController
 	    	end
     		render json: { success: true }
     	elsif @mother.in_chat? || params[:text].start_with?("@")
-    		message = Chat.message_details(params[:text])[:message]
-    		username = Chat.message_details(params[:text])[:username]
-    		Chat.process @mother, message, account, username
+    		message = params[:text]
+    		# Chat.process @mother, message, @account, username
+
+    		if message.start_with?("@")
+    			msg = Chat.message_details(message)[:message]
+    			username = Chat.message_details(message)[:username]
+    			recipient = Mother.where("username like ?", username).first
+    			sender = @mother
+    			if recipient != sender
+    				if !msg.blank?
+    					Chat.process sender, username, msg
+    				else
+    					Whatsapp.send_message "A chat has been initiated with @#{recipient.username} but you haven't included a message. Send your message now.", sender.phone_number, @account
+    				end
+    			else
+    				Whatsapp.send_message "Looks like you are trying to chat with yourself. :) Send /spin to find someone to chat with or /chat to get help on how the chat feature works.", params[:phone_number], @account
+    			end
+    		else
+    			sender = @mother
+    			Chat.process sender, message
+    		end
+    		render json: { success: true }
       else
       	# Check progress first in case an answer of one of the steps is a start of another wizard?
 	      @current = Progress.where(mother_id: @mother.id).order(id: :desc).first
@@ -118,13 +138,17 @@ class HomeController < ApplicationController
 	  	elsif step.name.downcase == "weeks"
 	  		if is_number?(text)
 	  			mother.update(weeks_since_conception: text)
+	  			tips = Tip.where('week >= ?', mother.weeks_since_conception)
+	  			tips.each do |tip|
+	  				ReminderWorker.perform_in(((tip.week.to_i - mother.weeks_since_conception.to_i) * 60), mother.id, tip.id)
+	  			end
 	  		else
 	  			return {type: "Response", text: "You have sent #{text} which is not a number. Please send a number i.e 4. Thanks."}
 	  		end
 	  	elsif step.name.downcase == "username"
   			error = Mother.check_format(params[:text])
   			if error.blank?
-  				@mother.update(username: params[:username])
+  				@mother.update(username: params[:text].downcase)
   				msg = "Your username has been setup. Now, you can chat with fellow mums.\n\nFind a random person to chat with by sending /spin. You can then start a conversation with your random friend like this:\n\n@username: hi. \n\nOnce you have started the chat, you don't have to include the username again. Just send the message the way you normally do. But, if you want to chat with someone else, you will have to start with the username or your message will go to the wrong person. If you want to be very careful, you can always add the username to your message but most of the times, that is not neccessary."
   			else
   				msg = error
@@ -190,13 +214,13 @@ class HomeController < ApplicationController
 
   def set_mother
     @mother = Mother.find_by_phone_number(params[:phone_number])
-    if @mother.nil?
+    if @mother.nil? && params[:notification_type] == "MessageReceived"
       @mother = Mother.create! phone_number: params[:phone_number], name: params[:name], account: Account.find_by(phone_number: params[:account])
     end
     @mother
   end
 
   def set_account
-  	@account = Account.find_by(phone_number: params[:account])
+  	@account = Account.find_by(phone_number: params[:account]) if params[:notification_type] == "MessageReceived"
   end
 end
