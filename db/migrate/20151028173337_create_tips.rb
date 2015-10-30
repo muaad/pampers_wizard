@@ -3,7 +3,7 @@ class CreateTips < ActiveRecord::Migration
     create_table :tips do |t|
       t.string :name
       t.text :body
-      t.string :week
+      t.integer :week
 
       t.timestamps null: false
     end
