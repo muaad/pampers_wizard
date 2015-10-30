@@ -22,6 +22,7 @@ gem 'seed_dump'
 gem 'sidekiq'
 gem 'sinatra', require: false
 gem 'slim'
+gem 'rollbar'
 group :development do
   gem 'better_errors'
   gem 'html2haml'
