@@ -19,7 +19,7 @@ class Chat < ActiveRecord::Base
   	account = sender.account
   	sender.progresses.delete_all if !sender.progresses.blank?
   	if !username.empty?
-  		recipient = Mother.where('username like ?', username).first
+  		recipient = Mother.where('username ilike ?', username).first
   		if !recipient.nil?
   			if recipient.opted_in && sender.opted_in
   				chats = sender.chats_with(recipient)

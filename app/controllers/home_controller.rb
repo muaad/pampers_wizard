@@ -55,7 +55,7 @@ class HomeController < ApplicationController
     		if message.start_with?("@")
     			msg = Chat.message_details(message)[:message]
     			username = Chat.message_details(message)[:username]
-    			recipient = Mother.where("username like ?", username).first
+    			recipient = Mother.where("username ilike ?", username).first
     			sender = @mother
     			if recipient != sender
     				if !msg.blank?
