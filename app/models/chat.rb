@@ -21,6 +21,7 @@ class Chat < ActiveRecord::Base
   	if !username.empty?
   		recipient = Mother.where('username ilike ?', username).first
   		if !recipient.nil?
+        recipient.progresses.delete_all if !recipient.progresses.blank?
   			if recipient.opted_in && sender.opted_in
   				chats = sender.chats_with(recipient)
   				if chats.empty?
@@ -54,6 +55,7 @@ class Chat < ActiveRecord::Base
   		chat = active.nil?? last_chat : active
   		if !chat.nil?
   			recipient = chat.recipient(sender)
+        recipient.progresses.delete_all if !recipient.progresses.blank?
   			if recipient.opted_in && sender.opted_in
   				if !active.nil?
   					Whatsapp.send_message "@#{sender.username} says:\n\n#{message}", recipient.phone_number, account
