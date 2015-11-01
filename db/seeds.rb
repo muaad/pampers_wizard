@@ -1,4 +1,4 @@
-account = Account.find_or_create_by! phone_number: "254771437706", auth_token: "044a0fe3ae478104c344e5be8d4e3ea5", name: "Pampers"
+account = Account.find_or_create_by! phone_number: "254771437706", name: "Pampers"
 
 wizard = Wizard.find_or_create_by start_keyword: "Pampers", account_id: account.id, name: "Pampers", reset_keyword: "reset"
 
